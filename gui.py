@@ -3,6 +3,22 @@ import customtkinter as ctk
 from PIL import Image
 from directions import generate_directions
 
+GF_COORDS = {
+    "AIDS Block - Entrance (GF)": (400, 420),
+    "AIDS Block - Stairs (GF)": (400, 340),
+    "AIDS Block - Data Science Lab [CC18] (GF)": (400, 260),
+
+    "AIDS Block - AV Hall 1 (GF)": (250, 420),
+    "AIDS Block - RL Lab (GF)": (250, 340),
+
+    "AIDS Block - Staff Room (GF)": (550, 340),
+    "AIDS Block - Deep Learning Lab [CC16] (GF)": (650, 340),
+
+    "AIDS Block - AV Hall 2 (GF)": (200, 180),
+    "AIDS Block - OOPS Lab [CC20] (GF)": (300, 180),
+    "AIDS Block - HOD & Staff Room (GF)": (500, 180),
+}
+
 # ---- THEME ----
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark")
@@ -11,7 +27,7 @@ def launch_gui(panels, campus, navi):
     app = ctk.CTk()
     app.configure(fg_color="#000000")
     app.title("NAVI Navigation Panel")
-    app.geometry("750x600")
+    app.geometry("900x900")
     app.resizable(False, False)
 
     # ---- Logo ----
@@ -36,7 +52,7 @@ def launch_gui(panels, campus, navi):
 
     status = ctk.CTkLabel(app, text="SYSTEM READY", text_color="#ff2a2a")
     status.pack()
-    
+
     # ---- Emergency Mode ----
     emergency_var = ctk.BooleanVar(value = False)
 
@@ -103,6 +119,18 @@ def launch_gui(panels, campus, navi):
     dropdown_text_color="#ff2a2a", dropdown_hover_color="#222222"
     ).grid(row=3, column=1, padx=12)
 
+    # ---- Canvas (MAP) ----
+    canvas = ctk.CTkCanvas(
+        app,
+        width=800,
+        height=500,
+        bg="#050505",
+        highlightthickness=0
+    )
+    canvas.pack(pady=10)
+
+    canvas.create_text(400, 250, text="MAP CANVAS ACTIVE", fill="white", font=("Arial", 20))
+
     # ---- Output Console ----
     output = ctk.CTkTextbox(app,
         width=680, height=180,
@@ -111,6 +139,44 @@ def launch_gui(panels, campus, navi):
         border_color="#ff2a2a",
         border_width=1)
     output.pack(pady=15)
+
+    # ---- Draw room layout ----
+    def draw_rooms():
+        ROOM_W, ROOM_H = 120, 50
+
+        for name, (x, y) in GF_COORDS.items():
+            canvas.create_rectangle(
+                x - ROOM_W // 2,
+                y - ROOM_H // 2,
+                x + ROOM_W // 2,
+                y + ROOM_H // 2,
+                outline="#ff2a2a",
+                width=2
+            )
+
+            canvas.create_text(
+                x, y,
+                text=name.replace("AIDS Block - ", "").replace(" (GF)", ""),
+                fill="#ff2a2a",
+                font=("Segoe UI", 9),
+                width=110
+            )
+
+    # ---- Draw connections ----
+    def draw_connections():
+        for (a, b) in campus.connection_type.keys():
+            if a in GF_COORDS and b in GF_COORDS:
+                x1, y1 = GF_COORDS[a]
+                x2, y2 = GF_COORDS[b]
+
+                canvas.create_line(
+                    x1, y1, x2, y2,
+                    fill="#888888",
+                    width=3
+                )
+                
+    draw_connections()
+    draw_rooms()
 
     # ---- Navigation Logic ----
     output.delete("1.0", "end")
