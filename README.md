@@ -97,6 +97,24 @@ NAVI doesn't just fail - it explains why.
 
 ---------------------
 
+## Phase 2: Map Visualisation (Completed)
+
+Phase 2 focuses on visualising NAVI’s navigation logic through an interactive map
+representation of a building.
+
+### Key Features
+- Visual floor maps using PyQt
+- Ground Floor, Floor 1, and Floor 2 layouts
+- Corridor-based routing visualisation
+- Route highlighting across multiple floors
+- Automatic floor switching based on navigation path
+- Clear separation between navigation logic and UI rendering
+
+This phase establishes the foundation for advanced navigation features such as
+emergency routing, accessibility-aware paths, and intelligent UX improvements.
+
+---------------------
+
 ## License
 
 This project is a personal and experimental system.  
