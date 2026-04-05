@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NAVI - Control Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #5f0a87, #a4508b);
+    margin: 0;
+    color: white;
+}
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+}
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+}
+.btn-danger {
+    background: #e53935;
+    color: white;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background: #c62828;
+}
+.btn {
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+.btn:hover {
+    background: #45a049;
+}
+.output {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    min-height: 50px;
+    white-space: pre-line;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🚨 NAVI - Control Console</h1>
+
+    <div class="card">
+        <h2>Emergency Control Panel</h2>
+
+        <select id="blocked">
+            <option>Select Blocked Location</option>
+            <option>Entrance</option>
+            <option>Staircase #1</option>
+            <option>Deep Learning Lab</option>
+            <option>AV Hall #1</option>
+            <option>Boys Restroom</option>
+            <option>Staff Room #1</option>
+            <option>Project Lab</option>
+            <option>AR/VR Lab</option>
+            <option>Hallway 1-L</option>
+            <option>Hallway 1-R</option>
+            <option>Data Science Lab</option>
+            <option>Staircase #2</option>
+            <option>Hallway 2</option>
+            <option>OOPS Lab</option>
+            <option>AV Hall #2</option>
+            <option>Girls Restroom</option>
+            <option>Hallway 3-L</option>
+            <option>Hallway 3-R</option>
+            <option>Staff Room #2 (HOD Room)</option>
+            <option>Class A</option>
+            <option>Class B</option>
+            <option>Exit1</option>
+        </select>
+
+        <button class="btn-danger" onclick="triggerEmergency()">Trigger Emergency</button>
+        <button class="btn" onclick="resetEmergency()">Reset Emergency</button>
+
+        <div class="output" id="controlResult">Control actions will be shown here...</div>
+    </div>
+
+    <div class="card">
+        <a href="/navigation"><button class="btn">Go to Navigation Console</button></a>
+    </div>
+</div>
+
+<script>
+async function triggerEmergency() {
+    let blocked = document.getElementById("blocked").value;
+
+    if (blocked === "Select Blocked Location") {
+        document.getElementById("controlResult").innerText = "Please select a blocked location!";
+        return;
+    }
+
+    const response = await fetch("/trigger_emergency", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ blocked: blocked })
+    });
+
+    const data = await response.json();
+    document.getElementById("controlResult").innerText = data.result;
+}
+
+async function resetEmergency() {
+    const response = await fetch("/reset_emergency", {
+        method: "POST"
+    });
+
+    const data = await response.json();
+    document.getElementById("controlResult").innerText = data.result;
+}
+</script>
+</body>
+</html>

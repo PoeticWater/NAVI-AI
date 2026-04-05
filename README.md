@@ -1,63 +1,9 @@
-# NAVI AI 
+# NAVI AI
 
-NAVI AI (simply called NAVI) is a Python-based intelligent navigation system designed to guide users through complex campus environments.  
-It provides real-time routing, role-based access control, emergency-aware pathfinding, and human-readable directions through a graphical interface.
+NAVI AI (referred to as NAVI) is an indoor navigation and emergency evacuation routing system designed for complex campus and building environments.
+The system uses graph-based navigation and the A* pathfinding algorithm to guide users through indoor environments and dynamically reroute paths during emergencies.
 
-This project was created as a personal initiative to turn a fictional navigation system into a real, functional application.
-
----------------------
-
-## Features
-
-- **Graph-Based Navigation**  
-  Computes shortest and valid paths between locations using a graph model of the campus.
-
-- **Role-Based Routing**  
-  Certain locations can be restricted based on user roles (e.g., visitor, staff).
-
-- **Emergency Mode**  
-  Locations can be blocked in real time, forcing NAVI to re-route or explain why a route is unavailable.
-
-- **Preference-Aware Routing**  
-  Users can prefer stairs or elevators when moving between floors.
-
-- **Graphical Control Panels**  
-  Users interact with NAVI through virtual navigation panels placed around the campus.
-
-- **Human-Readable Directions**  
-  Routes are converted into clear step-by-step instructions.
-
-- **Route Explanations**  
-  When a route is chosen or rejected, NAVI explains why (blocked areas, role restrictions, etc.).
-
----------------------
-
-## How does NAVI work?
-
-NAVI represents the campus as a 'graph':
-
-- Nodes = rooms, corridors, stairs, outdoor spaces  
-- Edges = walkable connections between them  
-
-Breadth-First Search (BFS) algorithm is used to find valid routes while considering:
-
-- Emergency blocks  
-- User role restrictions  
-- Movement preferences (stairs or elevator)
-
----------------------
-
-## User Interface
-
-The system includes a CustomTkinter-based control panel where users can:
-
-- Select their current panel location  
-- Choose their role  
-- Set movement preferences  
-- Select a destination  
-- Activate emergency mode  
-
-NAVI instantly calculates and displays the best route.
+The project is being developed in multiple phases, evolving from a prototype navigation system into a full web-based indoor navigation platform.
 
 ---------------------
 
@@ -77,15 +23,6 @@ NAVI doesn't just fail - it explains why.
 
 ---------------------
 
-## Technologies Used
-
-- Python  
-- CustomTkinter  
-- Pillow (PIL)  
-- Graph algorithms (BFS)  
-
----------------------
-
 ## Future Plans
 
 - Multi-floor elevator logic
@@ -97,21 +34,49 @@ NAVI doesn't just fail - it explains why.
 
 ---------------------
 
+## Phase 1: Basic Prototype (Completed)
+
+Phase 1 focuses on NAVI’s basic navigation logic.
+
+### Key Features
+- Basic routing using BFS (Breath First Search) Algorithm.
+- CustomTkinter UI for displaying the route.
+
+This phase establishes the foundation for advanced navigation features such as
+emergency routing, accessibility-aware paths, and intelligent UX improvements.
+
+---------------------
+
 ## Phase 2: Map Visualisation (Completed)
 
-Phase 2 focuses on visualising NAVI’s navigation logic through an interactive map
-representation of a building.
+Phase 2 focuses on visualising NAVI’s navigation logic through an interactive map representation of a building.
 
 ### Key Features
 - Visual floor maps using PyQt
-- Ground Floor, Floor 1, and Floor 2 layouts
 - Corridor-based routing visualisation
-- Route highlighting across multiple floors
-- Automatic floor switching based on navigation path
 - Clear separation between navigation logic and UI rendering
 
 This phase establishes the foundation for advanced navigation features such as
 emergency routing, accessibility-aware paths, and intelligent UX improvements.
+
+---------------------
+
+## Phase 2.5: Frontend + Backend Update (Completed)
+
+Phase 2.5 focuses on updating NAVI's Frontend and Backend with A* Pathfinding Algorithm and Web-based UI.
+
+### Key Features
+- Graph-based indoor navigation model
+- A* pathfinding algorithm
+- Web-based Navigation Console
+- Control Console for emergency management
+- Dynamic blocked location handling
+- Automatic evacuation routing to nearest exit
+- Flask backend with API-based routing
+- Interactive building navigation interface
+- Emergency status monitoring
+- Modular system design (map, pathfinding, backend, frontend)
+- Update Technology Stack
 
 ---------------------
 
